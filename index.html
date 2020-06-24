@@ -69,28 +69,37 @@
       </div>
   
       <div id="eventscontainer">
-          <input type="text" id="hometeam" value="hometeam">
-          <input type="text" id='awayteam' value="awayteam">
-        <p
+          
+        
+        <input type="text" id="hometeam" value="hometeam" size="12">
+        <input type="text" id='awayteam' value="awayteam" size="12">
+        <br/>
+        <span
           class="event"
           id="selected"
           onclick="changeEventFocus(this)"
           contenteditable="false"
         >
           Shot
-        </p>
-        <p class="event" onclick="changeEventFocus(this)" contenteditable="false">
-          Header
-        </p>
-        <p class="event" onclick="changeEventFocus(this)" contenteditable="false">
-          Blocked
-        </p>
-        <p class="event" onclick="changeEventFocus(this)" contenteditable="false">
+        </span>
+        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+            Goal
+          </span>
+        <br />
+        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
           Freekick
-        </p>
-        <p class="event" onclick="changeEventFocus(this)" contenteditable="false">
-          Goal
-        </p>
+        </span>
+        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+            Penalty
+        </span>
+        <br />
+        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+            Header
+          </span>
+          <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+            Blocked
+          </span>
+        
         <p id="buttonContainer">
           <button id="delLast" onclick="delLast()">
             Delete last
