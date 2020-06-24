@@ -126,7 +126,7 @@ textarea {
   }
 
   #topnav a{
-    color: green;
+    color: purple;
     text-decoration: none;
     font-weight: 900;
   }
@@ -317,7 +317,7 @@ textarea {
   }
   
   #selected{
-    color: green;
+    color: purple;
     font-weight: 600;
   }
   
