@@ -81,7 +81,7 @@ function addevent(event) {
               downloadLink = document.createElement("a");
           
               // File name
-              downloadLink.download = filename+'.jpg';
+              downloadLink.download = 'shots_'+new Date().valueOf()+'.png';
           
               // Create a link to the file
               downloadLink.href = window.URL.createObjectURL(csvFile);
@@ -97,6 +97,8 @@ function addevent(event) {
           }
       };
       xhttp.open("POST", "https://jjay.pythonanywhere.com/match", true);
+      // xhttp.open("POST", "http://127.0.0.1:5000/match", true);
+      
       xhttp.setRequestHeader("Content-type", "application/json");
       // xhttp.setRequestHeader('Authorization','Basic dXNlcjp1c2Vy');
       xhttp.responseType = 'blob';
@@ -131,7 +133,11 @@ function addevent(event) {
     // xhttp.send("213");
     var csv = [];
     var rows = document.querySelectorAll("table tr");
-    
+
+    hometeam = document.getElementsByTagName('input').hometeam.value
+    awayteam = document.getElementsByTagName('input').awayteam.value
+
+    csv.push([hometeam,awayteam,'-1'].join(","))
     for (var i = 0; i < rows.length; i++) {
         var row = [], cols = rows[i].querySelectorAll("td, th");
         
@@ -143,8 +149,6 @@ function addevent(event) {
 
     // Download CSV file
     downloadCSV(JSON.stringify(Object.assign({}, csv)), filename,"text/json");
-
-
 
   }
   
