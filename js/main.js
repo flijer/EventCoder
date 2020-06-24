@@ -134,10 +134,11 @@ function addevent(event) {
     var csv = [];
     var rows = document.querySelectorAll("table tr");
 
-    hometeam = document.getElementsByTagName('input').hometeam.value
-    awayteam = document.getElementsByTagName('input').awayteam.value
+    hometeam = document.getElementsByTagName('input').hometeam.value;
+    awayteam = document.getElementsByTagName('input').awayteam.value;
+    cb = document.getElementsByTagName('input').cblanguage;
 
-    csv.push([hometeam,awayteam,'-1'].join(","))
+    csv.push([hometeam,awayteam,cb.checked?'1':'0'].join(","))
     for (var i = 0; i < rows.length; i++) {
         var row = [], cols = rows[i].querySelectorAll("td, th");
         
