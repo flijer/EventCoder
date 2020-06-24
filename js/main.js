@@ -96,7 +96,7 @@ function addevent(event) {
               downloadLink.click();
           }
       };
-      xhttp.open("POST", "http://jjay.pythonanywhere.com/match", true);
+      xhttp.open("POST", "https://jjay.pythonanywhere.com/match", true);
       xhttp.setRequestHeader("Content-type", "application/json");
       // xhttp.setRequestHeader('Authorization','Basic dXNlcjp1c2Vy');
       xhttp.responseType = 'blob';
