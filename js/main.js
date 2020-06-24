@@ -63,12 +63,12 @@ function addevent(event) {
       
   }
   
-  function downloadCSV(csv, filename) {
+  function downloadCSV(csv, filename,filetype) {
       var csvFile;
       var downloadLink;
   
       // CSV file
-      csvFile = new Blob([csv], {type: "text/csv"});
+      csvFile = new Blob([csv], {type: filetype});
   
       // Download link
       downloadLink = document.createElement("a");
@@ -100,6 +100,35 @@ function addevent(event) {
       
 };
   
+  function UserAction(filename) {
+    // var xhttp = new XMLHttpRequest();
+    // xhttp.onreadystatechange = function() {
+    //      if (this.readyState == 4 && this.status == 200) {
+    //          alert(this.responseText);
+    //      }
+    // };
+    // xhttp.open("POST", "https://jjay.pythonanywhere.com/test", true);
+    // xhttp.setRequestHeader("Content-type", "application/json");
+
+    // xhttp.send("213");
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+    
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        
+        for (var j = 0; j < cols.length; j++)
+            row.push(cols[j].innerText);
+        
+        csv.push(row.join(","));        
+    }
+
+    // Download CSV file
+    downloadCSV(JSON.stringify(Object.assign({}, csv)), filename,"text/json");
+
+
+
+  }
   
   
   function exportTableToCSV(filename) {
@@ -116,7 +145,7 @@ function addevent(event) {
       }
   
       // Download CSV file
-      downloadCSV(csv.join("\n"), filename);
+      downloadCSV(csv.join("\n"), filename,"text/csv");
   }
   
 

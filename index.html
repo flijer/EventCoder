@@ -62,13 +62,16 @@
           Shot
         </p>
         <p class="event" onclick="changeEventFocus(this)" contenteditable="false">
-          Pass
+          Header
         </p>
         <p class="event" onclick="changeEventFocus(this)" contenteditable="false">
-          Tackle
+          Blocked
         </p>
         <p class="event" onclick="changeEventFocus(this)" contenteditable="false">
-          Foul
+          Freekick
+        </p>
+        <p class="event" onclick="changeEventFocus(this)" contenteditable="false">
+          Goal
         </p>
         <h4 onclick="eventsEditable()"><span id="editON">ON|</span>Edit<span id="editOFF">|OFF</span></h4>
 
@@ -79,6 +82,9 @@
           <button id="delLast" onclick="delLast()">
             Delete last
           </button>
+          <button id="export" onclick="UserAction('events.json')">
+            Test rest
+           </button>
         </p>
       </div>
     </div>
