@@ -175,7 +175,7 @@ textarea {
   .top-box {
     border:solid 1px #fff;
     border-top: none;
-    bottom: 85%;
+    bottom: 84%;
     left:17%;
     position:absolute;
     right:17%;
@@ -200,7 +200,7 @@ textarea {
     left:17%;
     position:absolute;
     right:17%;
-    top:85%;
+    top:84%;
   }
   
   .bottom-box:before {
@@ -212,7 +212,7 @@ textarea {
     left:30%;
     position:absolute;
     right:30%;
-    top: -24%;
+    top: -28%;
   }
   
   .centre-circle {
