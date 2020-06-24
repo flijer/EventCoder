@@ -42,9 +42,11 @@
     <div id="pitchcontainer">
       <div id="linecontainer">
         <div class="top-box line"></div>
+        <div class="top-box2 line"></div>
         <div class="centre-circle line"></div>
         <div class="centre-line line"></div>
         <div class="bottom-box line"></div>
+        <div class="bottom-box2 line"></div>
       </div>
       <div id="pitch" class="line" onclick="addevent(event)"></div>
      
@@ -92,6 +94,7 @@
           <button id="delLast" onclick="delLast()">
             Delete last
           </button>
+          <input type="checkbox" value="english" id="cblanguage" title="Language English">
           <button id="export" onclick="UserAction('events.json')">
             Generate Report
            </button>

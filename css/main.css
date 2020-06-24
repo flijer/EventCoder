@@ -181,6 +181,16 @@ textarea {
     right:17%;
     top:00%;
   }
+
+  .top-box2 {
+    border:solid 1px #fff;
+    border-top: none;
+    bottom: 94%;
+    left:35%;
+    position:absolute;
+    right:35%;
+    top:00%;
+  }
   
   .top-box:before {
     border-bottom:solid 1px #fff;
@@ -201,6 +211,16 @@ textarea {
     position:absolute;
     right:17%;
     top:84%;
+  }
+
+  .bottom-box2 {
+    border:solid 1px #fff;
+    border-bottom: none;
+    bottom:0;
+    left:35%;
+    position:absolute;
+    right:35%;
+    top:94%;
   }
   
   .bottom-box:before {
