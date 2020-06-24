@@ -175,10 +175,10 @@ textarea {
   .top-box {
     border:solid 1px #fff;
     border-top: none;
-    bottom: 80%;
-    left:15%;
+    bottom: 85%;
+    left:17%;
     position:absolute;
-    right:15%;
+    right:17%;
     top:00%;
   }
   
@@ -197,10 +197,10 @@ textarea {
     border:solid 1px #fff;
     border-bottom: none;
     bottom:0;
-    left:15%;
+    left:17%;
     position:absolute;
-    right:15%;
-    top:80%;
+    right:17%;
+    top:85%;
   }
   
   .bottom-box:before {
