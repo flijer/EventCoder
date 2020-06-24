@@ -96,8 +96,8 @@ function addevent(event) {
               downloadLink.click();
           }
       };
-      //xhttp.open("POST", "https://jjay.pythonanywhere.com/match", true);
-      xhttp.open("POST", "http://127.0.0.1:5000/match", true);
+      xhttp.open("POST", "https://jjay.pythonanywhere.com/match", true);
+      //xhttp.open("POST", "http://127.0.0.1:5000/match", true);
       
       xhttp.setRequestHeader("Content-type", "application/json");
       // xhttp.setRequestHeader('Authorization','Basic dXNlcjp1c2Vy');
