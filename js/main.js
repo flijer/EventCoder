@@ -69,24 +69,38 @@ function addevent(event) {
   
       // CSV file
       csvFile = new Blob([csv], {type: filetype});
+
+
+      var xhttp = new XMLHttpRequest();
+      
+      xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              alert(this.responseText);
+          }
+      };
+      xhttp.open("POST", "http://127.0.0.1:5000/match/", true);
+      xhttp.setRequestHeader("Content-type", "application/json");
+      
+
+      xhttp.send(csv);
   
-      // Download link
-      downloadLink = document.createElement("a");
+      // // Download link
+      // downloadLink = document.createElement("a");
   
-      // File name
-      downloadLink.download = filename;
+      // // File name
+      // downloadLink.download = filename;
   
-      // Create a link to the file
-      downloadLink.href = window.URL.createObjectURL(csvFile);
+      // // Create a link to the file
+      // downloadLink.href = window.URL.createObjectURL(csvFile);
   
-      // Hide download link
-      downloadLink.style.display = "none";
+      // // Hide download link
+      // downloadLink.style.display = "none";
   
-      // Add the link to DOM
-      document.body.appendChild(downloadLink);
+      // // Add the link to DOM
+      // document.body.appendChild(downloadLink);
   
-      // Click download link
-      downloadLink.click();
+      // // Click download link
+      // downloadLink.click();
   }
 
 
