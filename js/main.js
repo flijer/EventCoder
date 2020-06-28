@@ -63,33 +63,10 @@ function addevent(event) {
       
   }
 
-  const spinner = document.getElementById("spinner");
-
-    function showSpinner() {
-      spinner.className = "show";
-      setTimeout(() => {
-        spinner.className = spinner.className.replace("show", "");
-      }, 2500);
-    }
-
-    function hideSpinner() {
-      spinner.className = spinner.className.replace("show", "");
-    }
-
-    // function loadData() {
-    
-    //   fetch('https://randomuser.me/api/')
-    //   .then(response => response.json())
-    //     .then(data => {
-    //     // hideSpinner()
-    //     console.log(data)
-    //   });
-    // }
-  
+   
   function downloadCSV(csv, filename,filetype) {
       
-      showSpinner()
-      
+          
       var csvFile;
       var downloadLink;
   
