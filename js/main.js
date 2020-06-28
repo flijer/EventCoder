@@ -62,8 +62,34 @@ function addevent(event) {
         }
       
   }
+
+  const spinner = document.getElementById("spinner");
+
+    function showSpinner() {
+      spinner.className = "show";
+      setTimeout(() => {
+        spinner.className = spinner.className.replace("show", "");
+      }, 2500);
+    }
+
+    function hideSpinner() {
+      spinner.className = spinner.className.replace("show", "");
+    }
+
+    // function loadData() {
+    
+    //   fetch('https://randomuser.me/api/')
+    //   .then(response => response.json())
+    //     .then(data => {
+    //     // hideSpinner()
+    //     console.log(data)
+    //   });
+    // }
   
   function downloadCSV(csv, filename,filetype) {
+      
+      showSpinner()
+      
       var csvFile;
       var downloadLink;
   
@@ -95,12 +121,37 @@ function addevent(event) {
               // Click download link
               downloadLink.click();
           }
+          if (this.readyState == 4 && this.status != 200) {
+
+                            // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                var modal = document.getElementById("myModal");
+
+                // When the user clicks the button, open the modal 
+             
+                modal.style.display = "block";
+                
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                  modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                  if (event.target == modal) {
+                    modal.style.display = "none";
+                  }
+                }
+
+          }
       };
       xhttp.open("POST", "https://jjay.pythonanywhere.com/match", true);
       //xhttp.open("POST", "http://127.0.0.1:5000/match", true);
       
-      xhttp.setRequestHeader("Content-type", "application/json");
-      // xhttp.setRequestHeader('Authorization','Basic dXNlcjp1c2Vy');
+      //xhttp.setRequestHeader("Content-type", "application/json");
+      xhttp.setRequestHeader('Authorization','Basic dXNlcjp1c2Vy');
       xhttp.responseType = 'blob';
       
 
