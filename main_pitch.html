@@ -78,7 +78,7 @@
               <th>Event</th>
               <th>X</th>
               <th>Y</th>
-              <th>G</th>
+              <th>Goal</th>
               <th title="Assisted by cross">Cross</th>
               <th title="Assisted from corner or freekick">FK</th>
               <th title="Assisted with pass">Pass</th>
@@ -86,17 +86,17 @@
               <th>Del</th>
             </tr>
           </thead>
-          <!-- <tbody id="resultsdata"></tbody> -->
-          <tbody id="resultsdata_hometeam" />
-          <tbody id="resultsdata_awayteam" />
+          
+          <tbody id="resultsdata_hometeam"  /> <!-- data for home team -->
+          <tbody id="resultsdata_awayteam" /> <!-- data for away team -->
         </table>
       </div>
   
       <div id="eventscontainer">
           
-        
-        <input type="text" id="hometeamid" value="hometeamid" size="12">
-        <input type="text" id='awayteamid' value="awayteamid" size="12">
+        <input type="text" id="hometeamid" value="hometeam" size="12">
+        <input type="text" id='awayteamid' value="awayteam" size="12">
+        <input type="checkbox" value="english" id="cblanguage" title="Language English" checked=True>
         <br/>
         <span
           class="event"
@@ -104,34 +104,16 @@
           onclick="changeEventFocus(this)"
           contenteditable="false"
         >
-          <!-- Shot
-        </span>
-        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
-            Goal
-          </span>
-        <br />
-        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
-          Freekick
-        </span>
-        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
-            Penalty
-        </span>
-        <br />
-        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
-            Header
-          </span>
-          <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
-            Blocked
-          </span> -->
         
         <p id="buttonContainer">
-          <button id="delLast" onclick="delLast()">
-            Delete last
+          <button onclick="downloadData()">
+           Download data
           </button>
-          <input type="checkbox" value="english" id="cblanguage" title="Language English" checked=True>
-          <button id="export" onclick="UserAction('events.json')">
+        
+          <button id="export" onclick="generateReport('events.json')">
             Generate Report
            </button>
+          
         </p>
       </div>
     </div>

@@ -152,7 +152,13 @@ function addevent(event) {
           'id':click_counter,
           'x': x2,
           'y':y2*100,
-          'ctx': ctx
+          'ctx': ctx,
+          'goal':false,
+          'event':'shot',
+          'Cross':false,
+          'FK': false,
+          'Pass':false,
+          'Minutes':'0'
         })
       }
     else{
@@ -161,7 +167,13 @@ function addevent(event) {
         'id':click_counter,
         'x': x2,
         'y':y2*100,
-        'ctx': ctx
+        'ctx': ctx,
+        'goal':false,
+        'event':'shot',
+        'Cross':false,
+        'FK': false,
+        'Pass':false,
+        'Minutes':'0'
       })
 
     }
@@ -198,7 +210,7 @@ function addevent(event) {
 
     // cell1.innerHTML = action;
     cell2.innerHTML = event_name_list[0] 
-    cell2.setAttribute("onClick", "changeEventType(this)");
+    cell2.setAttribute("onClick", "changeEventType(this,"+click_counter+")");
     
     //cell7.setAttribute('id',table.rows.length-1)
     cell10.innerHTML = 'X'
@@ -211,29 +223,26 @@ function addevent(event) {
     var cb1 = document.createElement("INPUT");
     cb1.setAttribute("type", "checkbox");
     cb1.setAttribute("name", "isgoal");
-    cb1.setAttribute("value", "1");
-    cb1.setAttribute("id", 1);
+    cb1.setAttribute("value", "goal");
     cell5.appendChild(cb1)
 
     var cb1 = document.createElement("INPUT");
     cb1.setAttribute("type", "checkbox");
     cb1.setAttribute("name", "fromcross");
-    cb1.setAttribute("value", "1");
-    cb1.setAttribute("id", 1);
+    cb1.setAttribute("value", "Cross");
     cell6.appendChild(cb1)
 
     var cb1 = document.createElement("INPUT");
     cb1.setAttribute("type", "checkbox");
     cb1.setAttribute("name", "fromsetpiece");
-    cb1.setAttribute("value", "1");
-    cb1.setAttribute("id", 1);
+    cb1.setAttribute("value", "SetPiece");
     cell7.appendChild(cb1)
 
     var cb1 = document.createElement("INPUT");
     cb1.setAttribute("type", "checkbox");
     cb1.setAttribute("name", "pass");
-    cb1.setAttribute("value", "1");
-    cb1.setAttribute("id", 1);
+    cb1.setAttribute("value", "Pass");
+
     cell8.appendChild(cb1)
 
     var cb1 = document.createElement("INPUT");
@@ -287,8 +296,29 @@ function addevent(event) {
       
   }
 
-   
   function downloadCSV(csv, filename,filetype) {
+      // CSV file
+      csvFile = new Blob([csv], {type: filetype});
+
+      // Download link
+      downloadLink = document.createElement("a");
+
+      // File name
+      downloadLink.download = 'shots_'+new Date().valueOf()+'.csv';
+
+      // Create a link to the file
+      downloadLink.href = window.URL.createObjectURL(csvFile);
+
+      // Hide download link
+      downloadLink.style.display = "none";
+
+      // Add the link to DOM
+      document.body.appendChild(downloadLink);
+
+      // Click download link
+      downloadLink.click();
+  }
+  function apiCall(csv, filename,filetype) {
       
           
       var csvFile;
@@ -361,18 +391,49 @@ function addevent(event) {
       
   }
 
+  function downloadData(){
 
-//   function delLast(){
+    var rows = document.querySelectorAll("table tr");
+    var csv = [];
+    //home team name, away team name, language selected
+    hometeam = document.getElementsByTagName('input').hometeamid.value;
+    awayteam = document.getElementsByTagName('input').awayteamid.value;
+    cb = document.getElementsByTagName('input').cblanguage;
 
-    
-//   var table = document.getElementById("resultstable");
-//   if (table.rows.length > 1){
-//   table.deleteRow((table.rows.length)-1);
-//   };
+    csv.push([hometeam,awayteam,cb.checked?'1':'0'].join(","))
+    for (var i = 0; i < rows.length; i++) {
+      var row = [], cols = rows[i].querySelectorAll("td, th");
       
-// };
+      for (var j = 0; j < cols.length-1; j++) //ignore last column because is delete button
+
+
+          if (i> 0 && j >=4 && j <=7)
+          {
+            row.push(cols[j].firstElementChild.checked?1:0);
+          }
+          else if (i> 0 && j==8){
+
+            row.push(cols[j].firstElementChild.value);
+          }
+          
+          else{
+            if(j==0 && i>0){
+
+              row.push(cols[0].parentNode.parentNode.id.split("_")[1]) //teamname
+            }
+            else
+              row.push(cols[j].innerText);
+          }
+
+         
+      
+      csv.push(row.join(","));        
+    }
+    
+    downloadCSV(csv.join("\n"),'name','text/csv')
+  }
   
-  function UserAction(filename) {
+  function generateReport(filename) {
     // var xhttp = new XMLHttpRequest();
     // xhttp.onreadystatechange = function() {
     //      if (this.readyState == 4 && this.status == 200) {
@@ -392,16 +453,36 @@ function addevent(event) {
 
     csv.push([hometeam,awayteam,cb.checked?'1':'0'].join(","))
     for (var i = 0; i < rows.length; i++) {
-        var row = [], cols = rows[i].querySelectorAll("td, th");
-        
-        for (var j = 0; j < cols.length; j++)
-            row.push(cols[j].innerText);
-        
-        csv.push(row.join(","));        
+      var row = [], cols = rows[i].querySelectorAll("td, th");
+      
+      for (var j = 0; j < cols.length-1; j++) //ignore last column because is delete button
+
+
+          if (i> 0 && j >=4 && j <=7)
+          {
+            row.push(cols[j].firstElementChild.checked?1:0);
+          }
+          else if (i> 0 && j==8){
+
+            row.push(cols[j].firstElementChild.value);
+          }
+          
+          else{
+            if(j==0 && i>0){
+
+              row.push(cols[0].parentNode.parentNode.id.split("_")[1]) //teamname
+            }
+            else
+              row.push(cols[j].innerText);
+          }
+
+         
+      
+      csv.push(row.join(","));        
     }
 
     // Download CSV file
-    downloadCSV(JSON.stringify(Object.assign({}, csv)), filename,"text/json");
+    apiCall(JSON.stringify(Object.assign({}, csv)), filename,"text/json");
 
   }
   
