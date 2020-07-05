@@ -1,15 +1,4 @@
 
-function hidecolumns()
-{
-    var rows = document.getElementById('resultstable').rows;
-    col_no = 2
-    for (var row = 0; row < rows.length; row++) {
-        var cols = rows[row].cells;
-        if (col_no >= 0 && col_no < cols.length) {
-            cols[col_no].style.display = 'none';
-        }
-    }
-}
 function init(){
 
     document.getElementById('pitch_hometeam').style.visibility="visible";
@@ -108,21 +97,7 @@ function changeTeam(){
     document.getElementById('selectedTeam').innerHTML = selectedTeam
 
 }
-// function removeElement(event){
-//   let rect = event.target.getBoundingClientRect() //get pitch dimensions
-    
-//     let x = ((event.clientX - rect.left)/document.getElementById("pitch_"+selectedTeam).offsetWidth); //x position within the element.
-//     let y = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
-//     let y2 = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
-    
-//     y = (y*40)/60
-//     y2 = (y2*60)/40
-    
-//     var x2 = event.clientX - rect.left;
-//     // var y2 = event.clientY - rect.top;
-//     var ctx = document.getElementById("pitch_"+selectedTeam).getContext("2d");
-//     ctx.clearArc(x2, y2*100, 3, 0, Math.PI * 2, true)
-// }
+
 function addevent(event) {
   
 
@@ -156,12 +131,6 @@ function addevent(event) {
           'x': x2,
           'y':y2*100,
           'ctx': ctx,
-          // 'goal':false,
-          // 'event':'shot',
-          // 'Cross':false,
-          // 'FK': false,
-          // 'Pass':false,
-          // 'Minutes':'0'
         })
       }
     else{
@@ -171,26 +140,11 @@ function addevent(event) {
         'x': x2,
         'y':y2*100,
         'ctx': ctx,
-        // 'goal':false,
-        // 'event':'shot',
-        // 'Cross':false,
-        // 'FK': false,
-        // 'Pass':false,
-        // 'Minutes':'0'
       })
 
     }
     ctx.fillText(click_counter+"", x2, y2*100);
 
-    
-    
-    
-    //ctx.beginPath();
-   // ctx.arc(x2, y2*100, 3, 0, Math.PI * 2, true);
-    //ctx.fill();
-  
-    
-    // let coords2 = "W = " + x + " Y = " + y;
     
     let action = document.getElementById('selected').innerHTML;
     
@@ -332,7 +286,7 @@ function addevent(event) {
       // Click download link
       downloadLink.click();
   }
-  function apiCall(csv, filename,filetype) {
+  function apiCall(csv, apiname,filetype) {
       
           
       var csvFile;
@@ -392,8 +346,8 @@ function addevent(event) {
 
           }
       };
-      xhttp.open("POST", "https://jjay.pythonanywhere.com/match", true);
-     // xhttp.open("POST", "http://127.0.0.1:5000/match", true);
+      xhttp.open("POST", "https://jjay.pythonanywhere.com/"+apiname, true);
+      xhttp.open("POST", "http://127.0.0.1:5000/"+apiname, true);
       
       //xhttp.setRequestHeader("Content-type", "application/json");
       xhttp.setRequestHeader('Authorization','Basic dXNlcjp1c2Vy');
@@ -414,7 +368,7 @@ function addevent(event) {
     awayteam = document.getElementsByTagName('input').awayteamid.value;
     cb = document.getElementsByTagName('input').cblanguage;
 
-    csv.push([hometeam,awayteam,cb.checked?'1':'0'].join(","))
+    //csv.push([hometeam,awayteam,cb.checked?'1':'0'].join(","))
     for (var i = 0; i < rows.length; i++) {
       var row = [], cols = rows[i].querySelectorAll("td, th");
       
@@ -447,7 +401,7 @@ function addevent(event) {
     downloadCSV(csv.join("\n"),'name','text/csv')
   }
   
-  function generateReport(filename) {
+  function generateReport(apiname) {
     // var xhttp = new XMLHttpRequest();
     // xhttp.onreadystatechange = function() {
     //      if (this.readyState == 4 && this.status == 200) {
@@ -496,7 +450,7 @@ function addevent(event) {
     }
 
     // Download CSV file
-    apiCall(JSON.stringify(Object.assign({}, csv)), filename,"text/json");
+    apiCall(JSON.stringify(Object.assign({}, csv)), apiname,"text/json");
 
   }
   
