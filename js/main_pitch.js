@@ -13,7 +13,11 @@ function hidecolumns()
 function init(){
 
     document.getElementById('pitch_hometeam').style.visibility="visible";
+    document.getElementById('resultsdata_hometeam').style.display="";
+
     document.getElementById('pitch_awayteam').style.visibility="hidden";
+    document.getElementById('resultsdata_awayteam').style.display="none";
+
     selectedTeam = 'hometeam'
 
     event_name_list = ['Shot','Header','Freekick','Penalty']; 
@@ -49,7 +53,7 @@ function deleteRow(o, pitchname, id, tn){
     ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    if(tn = 'hometeam'){
+    if(tn == 'hometeam'){
       hometeamcanvas = hometeamcanvas.filter(function(arrayItem) {
         return arrayItem.id !== id
       })
@@ -80,35 +84,45 @@ function deleteRow(o, pitchname, id, tn){
 function changeTeam(){
 
     if (selectedTeam == 'hometeam'){
+      
       document.getElementById('pitch_hometeam').style.visibility="hidden";
+      document.getElementById('resultsdata_hometeam').style.display="none";
+
       document.getElementById('pitch_awayteam').style.visibility="visible";
+      document.getElementById('resultsdata_awayteam').style.display="";
+      
       selectedTeam = 'awayteam'
 
     }
     else{
+      
       document.getElementById('pitch_awayteam').style.visibility="hidden";
+      document.getElementById('resultsdata_awayteam').style.display="none";
+
       document.getElementById('pitch_hometeam').style.visibility="visible";
+      document.getElementById('resultsdata_hometeam').style.display="";
+
       selectedTeam = 'hometeam'
     }
 
     document.getElementById('selectedTeam').innerHTML = selectedTeam
 
 }
-function removeElement(event){
-  let rect = event.target.getBoundingClientRect() //get pitch dimensions
+// function removeElement(event){
+//   let rect = event.target.getBoundingClientRect() //get pitch dimensions
     
-    let x = ((event.clientX - rect.left)/document.getElementById("pitch_"+selectedTeam).offsetWidth); //x position within the element.
-    let y = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
-    let y2 = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
+//     let x = ((event.clientX - rect.left)/document.getElementById("pitch_"+selectedTeam).offsetWidth); //x position within the element.
+//     let y = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
+//     let y2 = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
     
-    y = (y*40)/60
-    y2 = (y2*60)/40
+//     y = (y*40)/60
+//     y2 = (y2*60)/40
     
-    var x2 = event.clientX - rect.left;
-    // var y2 = event.clientY - rect.top;
-    var ctx = document.getElementById("pitch_"+selectedTeam).getContext("2d");
-    ctx.clearArc(x2, y2*100, 3, 0, Math.PI * 2, true)
-}
+//     var x2 = event.clientX - rect.left;
+//     // var y2 = event.clientY - rect.top;
+//     var ctx = document.getElementById("pitch_"+selectedTeam).getContext("2d");
+//     ctx.clearArc(x2, y2*100, 3, 0, Math.PI * 2, true)
+// }
 function addevent(event) {
   
 
@@ -167,7 +181,7 @@ function addevent(event) {
     
     // document.getElementById("demo").innerHTML = coords2 //test
     
-    let table = document.getElementById("resultsdata");
+    let table = document.getElementById("resultsdata_"+selectedTeam);
     let row = table.insertRow(-1);
     let cell1 = row.insertCell(0); //id
     let cell2 = row.insertCell(1); //event
@@ -176,8 +190,9 @@ function addevent(event) {
     let cell5 = row.insertCell(4); //goal
     let cell6 = row.insertCell(5); //cross
     let cell7 = row.insertCell(6); //freekick or corner
-    let cell8 = row.insertCell(7); //minutes selector
-    let cell9 = row.insertCell(8); //del button
+    let cell8 = row.insertCell(7); //pass
+    let cell9 = row.insertCell(8); //minutes selector
+    let cell10 = row.insertCell(9); //del button
     
     cell1.innerHTML = click_counter+""
 
@@ -186,8 +201,8 @@ function addevent(event) {
     cell2.setAttribute("onClick", "changeEventType(this)");
     
     //cell7.setAttribute('id',table.rows.length-1)
-    cell9.innerHTML = 'X'
-    cell9.setAttribute('onClick',"deleteRow(this,"+("pitch_"+selectedTeam)+","+click_counter+","+(selectedTeam)+")");//+(table.rows.length)+")");
+    cell10.innerHTML = 'X'
+    cell10.setAttribute('onClick',"deleteRow(this,"+("pitch_"+selectedTeam)+","+click_counter+","+("'"+selectedTeam)+"')");//+(table.rows.length)+")");
 
 
     cell3.innerHTML = Math.round(x*100);
@@ -215,13 +230,20 @@ function addevent(event) {
     cell7.appendChild(cb1)
 
     var cb1 = document.createElement("INPUT");
+    cb1.setAttribute("type", "checkbox");
+    cb1.setAttribute("name", "pass");
+    cb1.setAttribute("value", "1");
+    cb1.setAttribute("id", 1);
+    cell8.appendChild(cb1)
+
+    var cb1 = document.createElement("INPUT");
     cb1.setAttribute("type", "text");
     cb1.setAttribute("name", "minutes");
     cb1.setAttribute("value", "5");
     cb1.setAttribute("maxlength",2);
     cb1.setAttribute("size",2);
     cb1.setAttribute("id","minutes");
-    cell8.appendChild(cb1)
+    cell9.appendChild(cb1)
 
   
     document.getElementById("resultscontainer").scrollTop = document.getElementById("resultscontainer").scrollHeight; 
@@ -340,15 +362,15 @@ function addevent(event) {
   }
 
 
-  function delLast(){
+//   function delLast(){
 
     
-  var table = document.getElementById("resultstable");
-  if (table.rows.length > 1){
-  table.deleteRow((table.rows.length)-1);
-  };
+//   var table = document.getElementById("resultstable");
+//   if (table.rows.length > 1){
+//   table.deleteRow((table.rows.length)-1);
+//   };
       
-};
+// };
   
   function UserAction(filename) {
     // var xhttp = new XMLHttpRequest();
@@ -364,8 +386,8 @@ function addevent(event) {
     var csv = [];
     var rows = document.querySelectorAll("table tr");
 
-    hometeam = document.getElementsByTagName('input').hometeam.value;
-    awayteam = document.getElementsByTagName('input').awayteam.value;
+    hometeam = document.getElementsByTagName('input').hometeamid.value;
+    awayteam = document.getElementsByTagName('input').awayteamid.value;
     cb = document.getElementsByTagName('input').cblanguage;
 
     csv.push([hometeam,awayteam,cb.checked?'1':'0'].join(","))
