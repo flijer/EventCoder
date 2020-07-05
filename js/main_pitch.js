@@ -137,14 +137,17 @@ function addevent(event) {
     let y = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
     let y2 = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
     
+    //y = (y*39)/61 //TODO 40/60
     y = (y*40)/60
-    y2 = (y2*60)/40
+    y = y * 0.93//to m
+    y2 = (y2*60)/40 //just for visualization
+    //y2 = y2 / 0.9144 //to m
     
     var x2 = event.clientX - rect.left;
     // var y2 = event.clientY - rect.top;
     var ctx = document.getElementById("pitch_"+selectedTeam).getContext("2d");
     
-    ctx.font = "8px Comic Sans MS";
+    ctx.font = "7px Comic Sans MS";
   
     if(selectedTeam=='hometeam'){
         ctx.fillStyle = "#ff2626"; // Red color
@@ -153,12 +156,12 @@ function addevent(event) {
           'x': x2,
           'y':y2*100,
           'ctx': ctx,
-          'goal':false,
-          'event':'shot',
-          'Cross':false,
-          'FK': false,
-          'Pass':false,
-          'Minutes':'0'
+          // 'goal':false,
+          // 'event':'shot',
+          // 'Cross':false,
+          // 'FK': false,
+          // 'Pass':false,
+          // 'Minutes':'0'
         })
       }
     else{
@@ -168,12 +171,12 @@ function addevent(event) {
         'x': x2,
         'y':y2*100,
         'ctx': ctx,
-        'goal':false,
-        'event':'shot',
-        'Cross':false,
-        'FK': false,
-        'Pass':false,
-        'Minutes':'0'
+        // 'goal':false,
+        // 'event':'shot',
+        // 'Cross':false,
+        // 'FK': false,
+        // 'Pass':false,
+        // 'Minutes':'0'
       })
 
     }
@@ -216,9 +219,20 @@ function addevent(event) {
     cell10.innerHTML = 'X'
     cell10.setAttribute('onClick',"deleteRow(this,"+("pitch_"+selectedTeam)+","+click_counter+","+("'"+selectedTeam)+"')");//+(table.rows.length)+")");
 
+    x = x*100;
+    y = y*100;
+    if(selectedTeam == 'hometeam'){
 
-    cell3.innerHTML = Math.round(x*100);
-    cell4.innerHTML = Math.round(y*100);
+     // x = 100 -x;
+      y = 100 - y;
+    }
+    else{
+      x = 100 -x; //
+    }
+    
+
+    cell3.innerHTML = Math.round(x);
+    cell4.innerHTML = Math.round(y);
     
     var cb1 = document.createElement("INPUT");
     cb1.setAttribute("type", "checkbox");
@@ -378,8 +392,8 @@ function addevent(event) {
 
           }
       };
-     // xhttp.open("POST", "https://jjay.pythonanywhere.com/match", true);
-      xhttp.open("POST", "http://127.0.0.1:5000/match", true);
+      xhttp.open("POST", "https://jjay.pythonanywhere.com/match", true);
+     // xhttp.open("POST", "http://127.0.0.1:5000/match", true);
       
       //xhttp.setRequestHeader("Content-type", "application/json");
       xhttp.setRequestHeader('Authorization','Basic dXNlcjp1c2Vy');

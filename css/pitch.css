@@ -245,6 +245,15 @@ textarea {
     right:30%;
     top: -28%;
   }
+
+  .centre-line {
+    border-bottom:solid 1px #fff;
+    bottom:25%;
+    left:0;
+    position:absolute;
+    right:0;
+    top:75%;
+  }
   
   .centre-circle {
     border:solid 1px #fff;
@@ -256,14 +265,7 @@ textarea {
     top:60%;
   }
   
-  .centre-line {
-    border-bottom:solid 1px #fff;
-    bottom:30%;
-    left:0;
-    position:absolute;
-    right:0;
-    top:70%;
-  }
+  
   
   .line, .line:before{
     border-color: #979797;
