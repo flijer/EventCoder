@@ -347,7 +347,7 @@ function addevent(event) {
           }
       };
       xhttp.open("POST", "https://jjay.pythonanywhere.com/"+apiname, true);
-      xhttp.open("POST", "http://127.0.0.1:5000/"+apiname, true);
+     // xhttp.open("POST", "http://127.0.0.1:5000/"+apiname, true);
       
       //xhttp.setRequestHeader("Content-type", "application/json");
       xhttp.setRequestHeader('Authorization','Basic dXNlcjp1c2Vy');
