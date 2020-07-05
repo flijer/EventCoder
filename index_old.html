@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/pitch.css">
+  <link rel="stylesheet" href="css/main.css">
 
   <meta name="theme-color" content="#fafafa">
 
@@ -30,7 +30,7 @@
 </head>
 
 
-<body onload="init()">
+<body>
   <!--[if IE]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
   <![endif]-->
@@ -52,19 +52,17 @@
     </div>
 
     <p id="topnav" style="text-align: center">xG Match Report - <a href="https://twitter.com/jernejfl" target="_blank"> Jernej  </a> </p>
-    <p><button onclick="changeTeam()">Selected team: </button> <label id="selectedTeam"></label> </p>
+  
     <div id="pitchcontainer">
-     
       <div id="linecontainer">
         <div class="top-box line"></div>
         <div class="top-box2 line"></div>
         <div class="centre-circle line"></div>
         <div class="centre-line line"></div>
-        <!-- <div class="bottom-box line"></div>
-        <div class="bottom-box2 line"></div> -->
+        <div class="bottom-box line"></div>
+        <div class="bottom-box2 line"></div>
       </div>
-      <canvas id="pitch_hometeam" class="line" onclick="addevent(event)"></canvas>
-      <canvas id="pitch_awayteam" class="line" onclick="addevent(event)"></canvas>
+      <div id="pitch" class="line" onclick="addevent(event)"></div>
      
     </div>
     
@@ -74,29 +72,20 @@
         <table id="resultstable">
           <thead>
             <tr>
-              <th>Id</th>
               <th>Event</th>
               <th>X</th>
               <th>Y</th>
-              <th>Goal</th>
-              <th title="Assisted by cross">Cross</th>
-              <th title="Assisted from corner or freekick">FK</th>
-              <th title="Assisted with pass">Pass</th>
-              <th>Min</th>
-              <th>Del</th>
             </tr>
           </thead>
-          
-          <tbody id="resultsdata_hometeam"  /> <!-- data for home team -->
-          <tbody id="resultsdata_awayteam" /> <!-- data for away team -->
+          <tbody id="resultsdata"></tbody>
         </table>
       </div>
   
       <div id="eventscontainer">
           
-        <input type="text" id="hometeamid" value="hometeam" size="12">
-        <input type="text" id='awayteamid' value="awayteam" size="12">
-        <input type="checkbox" value="english" id="cblanguage" title="Language English" checked=True>
+        
+        <input type="text" id="hometeam" value="hometeam" size="12">
+        <input type="text" id='awayteam' value="awayteam" size="12">
         <br/>
         <span
           class="event"
@@ -104,16 +93,34 @@
           onclick="changeEventFocus(this)"
           contenteditable="false"
         >
+          Shot
+        </span>
+        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+            Goal
+          </span>
+        <br />
+        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+          Freekick
+        </span>
+        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+            Penalty
+        </span>
+        <br />
+        <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+            Header
+          </span>
+          <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
+            Blocked
+          </span>
         
         <p id="buttonContainer">
-          <button onclick="downloadData()">
-           Download data
+          <button id="delLast" onclick="delLast()">
+            Delete last
           </button>
-        
-          <button id="export" onclick="generateReport('events.json')">
+          <input type="checkbox" value="english" id="cblanguage" title="Language English" checked=True>
+          <button id="export" onclick="UserAction('events.json')">
             Generate Report
            </button>
-          
         </p>
       </div>
     </div>
@@ -134,7 +141,7 @@
   <script src="https://www.google-analytics.com/analytics.js" async></script>
 
   <script src="js/plugins.js"></script>
-  <script src="js/main_pitch.js"></script>
+  <script src="js/main.js"></script>
 
   
   <footer>
