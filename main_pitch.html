@@ -74,9 +74,15 @@
         <table id="resultstable">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Event</th>
               <th>X</th>
               <th>Y</th>
+              <th>G</th>
+              <th title="Assisted by cross">Cross</th>
+              <th title="Assisted from corner or freekick">FK</th>
+              <th>Min</th>
+              <th>Del</th>
             </tr>
           </thead>
           <tbody id="resultsdata"></tbody>
@@ -95,7 +101,7 @@
           onclick="changeEventFocus(this)"
           contenteditable="false"
         >
-          Shot
+          <!-- Shot
         </span>
         <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
             Goal
@@ -113,7 +119,7 @@
           </span>
           <span class="event" onclick="changeEventFocus(this)" contenteditable="false">
             Blocked
-          </span>
+          </span> -->
         
         <p id="buttonContainer">
           <button id="delLast" onclick="delLast()">

@@ -1,11 +1,81 @@
+
+function hidecolumns()
+{
+    var rows = document.getElementById('resultstable').rows;
+    col_no = 2
+    for (var row = 0; row < rows.length; row++) {
+        var cols = rows[row].cells;
+        if (col_no >= 0 && col_no < cols.length) {
+            cols[col_no].style.display = 'none';
+        }
+    }
+}
 function init(){
 
-  document.getElementById('pitch_hometeam').style.visibility="visible";
-  document.getElementById('pitch_awayteam').style.visibility="hidden";
-  selectedTeam = 'hometeam'
+    document.getElementById('pitch_hometeam').style.visibility="visible";
+    document.getElementById('pitch_awayteam').style.visibility="hidden";
+    selectedTeam = 'hometeam'
 
-  document.getElementById('selectedTeam').innerHTML = selectedTeam
+    event_name_list = ['Shot','Header','Freekick','Penalty']; 
+    active_event_id = 0
+    click_counter = 0
+
+    hometeamcanvas = []
+    awayteamcanvas = []
+
+    document.getElementById('selectedTeam').innerHTML = selectedTeam
+
     
+}
+
+function changeEventType(cell){
+  
+  active_event_id = active_event_id+1
+  if (active_event_id >= event_name_list.length){
+      active_event_id =0
+  }
+  
+  cell.innerHTML = event_name_list[active_event_id] 
+
+}
+function deleteRow(o, pitchname, id, tn){
+     
+    var p = o.parentNode;
+    p.parentNode.removeChild(p);
+    // var table = document.getElementById("resultstable");
+     //table.deleteRow(row);
+
+    canvas = pitchname // document.getElementById(pitchname);
+    ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    if(tn = 'hometeam'){
+      hometeamcanvas = hometeamcanvas.filter(function(arrayItem) {
+        return arrayItem.id !== id
+      })
+
+      // hometeamcanvas.splice(id-1, id-1);
+      //re-draw
+      hometeamcanvas.forEach(function (arrayItem) {
+        var itm = arrayItem;
+        itm.ctx.fillText(itm.id+"", itm.x, itm.y);
+      });
+  }
+  else{
+
+    awayteamcanvas = awayteamcanvas.filter(function(arrayItem) {
+      return arrayItem.id !== id
+    })
+
+    // hometeamcanvas.splice(id-1, id-1);
+    //re-draw
+    awayteamcanvas.forEach(function (arrayItem) {
+      var itm = arrayItem;
+      itm.ctx.fillText(itm.id+"", itm.x, itm.y);
+    });
+
+  }
+
 }
 function changeTeam(){
 
@@ -41,9 +111,12 @@ function removeElement(event){
 }
 function addevent(event) {
   
-    
-    console.log(event)
+
     if (document.getElementsByClassName("event")[0].getAttribute("contenteditable") == "false") {
+
+      click_counter = click_counter +1
+
+
     let rect = event.target.getBoundingClientRect() //get pitch dimensions
     
     let x = ((event.clientX - rect.left)/document.getElementById("pitch_"+selectedTeam).offsetWidth); //x position within the element.
@@ -57,14 +130,35 @@ function addevent(event) {
     // var y2 = event.clientY - rect.top;
     var ctx = document.getElementById("pitch_"+selectedTeam).getContext("2d");
     
-    if(selectedTeam=='hometeam')
+    ctx.font = "8px Comic Sans MS";
+  
+    if(selectedTeam=='hometeam'){
         ctx.fillStyle = "#ff2626"; // Red color
-    else
+        hometeamcanvas.push({
+          'id':click_counter,
+          'x': x2,
+          'y':y2*100,
+          'ctx': ctx
+        })
+      }
+    else{
        ctx.fillStyle = "blue"; // Red color
+       awayteamcanvas.push({
+        'id':click_counter,
+        'x': x2,
+        'y':y2*100,
+        'ctx': ctx
+      })
+
+    }
+    ctx.fillText(click_counter+"", x2, y2*100);
+
     
-    ctx.beginPath();
-    ctx.arc(x2, y2*100, 3, 0, Math.PI * 2, true);
-    ctx.fill();
+    
+    
+    //ctx.beginPath();
+   // ctx.arc(x2, y2*100, 3, 0, Math.PI * 2, true);
+    //ctx.fill();
   
     
     // let coords2 = "W = " + x + " Y = " + y;
@@ -75,13 +169,61 @@ function addevent(event) {
     
     let table = document.getElementById("resultsdata");
     let row = table.insertRow(-1);
-    let cell1 = row.insertCell(0);
-    let cell2 = row.insertCell(1);
-    let cell3 = row.insertCell(2);
-    cell1.innerHTML = action;
-    cell2.innerHTML = Math.round(x*100);
-    cell3.innerHTML = Math.round(y*100);
+    let cell1 = row.insertCell(0); //id
+    let cell2 = row.insertCell(1); //event
+    let cell3 = row.insertCell(2); //x
+    let cell4 = row.insertCell(3);  //y
+    let cell5 = row.insertCell(4); //goal
+    let cell6 = row.insertCell(5); //cross
+    let cell7 = row.insertCell(6); //freekick or corner
+    let cell8 = row.insertCell(7); //minutes selector
+    let cell9 = row.insertCell(8); //del button
     
+    cell1.innerHTML = click_counter+""
+
+    // cell1.innerHTML = action;
+    cell2.innerHTML = event_name_list[0] 
+    cell2.setAttribute("onClick", "changeEventType(this)");
+    
+    //cell7.setAttribute('id',table.rows.length-1)
+    cell9.innerHTML = 'X'
+    cell9.setAttribute('onClick',"deleteRow(this,"+("pitch_"+selectedTeam)+","+click_counter+","+(selectedTeam)+")");//+(table.rows.length)+")");
+
+
+    cell3.innerHTML = Math.round(x*100);
+    cell4.innerHTML = Math.round(y*100);
+    
+    var cb1 = document.createElement("INPUT");
+    cb1.setAttribute("type", "checkbox");
+    cb1.setAttribute("name", "isgoal");
+    cb1.setAttribute("value", "1");
+    cb1.setAttribute("id", 1);
+    cell5.appendChild(cb1)
+
+    var cb1 = document.createElement("INPUT");
+    cb1.setAttribute("type", "checkbox");
+    cb1.setAttribute("name", "fromcross");
+    cb1.setAttribute("value", "1");
+    cb1.setAttribute("id", 1);
+    cell6.appendChild(cb1)
+
+    var cb1 = document.createElement("INPUT");
+    cb1.setAttribute("type", "checkbox");
+    cb1.setAttribute("name", "fromsetpiece");
+    cb1.setAttribute("value", "1");
+    cb1.setAttribute("id", 1);
+    cell7.appendChild(cb1)
+
+    var cb1 = document.createElement("INPUT");
+    cb1.setAttribute("type", "text");
+    cb1.setAttribute("name", "minutes");
+    cb1.setAttribute("value", "5");
+    cb1.setAttribute("maxlength",2);
+    cb1.setAttribute("size",2);
+    cb1.setAttribute("id","minutes");
+    cell8.appendChild(cb1)
+
+  
     document.getElementById("resultscontainer").scrollTop = document.getElementById("resultscontainer").scrollHeight; 
     
     } else {
