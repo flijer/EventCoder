@@ -9,7 +9,7 @@ function init(){
 
     selectedTeam = 'hometeam'
 
-    event_name_list = ['Shot','Header','Freekick','Penalty']; 
+    event_name_list = ['Shot','Header','Freekick','Penalty','Blocked']; 
     active_event_id = 0
     click_counter = 0
 
@@ -112,12 +112,10 @@ function addevent(event) {
     let y = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
     let y2 = ((event.clientY - rect.top)/document.getElementById("pitch_"+selectedTeam).offsetHeight);  //y position within the element.
     
-    //y = (y*39)/61 //TODO 40/60
+   
     y = (y*40)/60
-    y = y * 0.93//to m
     y2 = (y2*60)/40 //just for visualization
-    //y2 = y2 / 0.9144 //to m
-    
+   
     var x2 = event.clientX - rect.left;
     // var y2 = event.clientY - rect.top;
     var ctx = document.getElementById("pitch_"+selectedTeam).getContext("2d");
